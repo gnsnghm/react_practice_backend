@@ -14,6 +14,22 @@ const getData = (req, res, db) => {
     }));
 }
 
+const tester = (req, res, db) => {
+  db.select('*').from('users')
+    .then(items => {
+      if (items.length) {
+        res.json(items);
+      } else {
+        res.json({
+          dataExists: 'false'
+        });
+      }
+    })
+    .catch(err => res.status(400).json({
+      dbError: 'error'
+    }));
+}
+
 const postData = (req, res, db, tname) => {
   const { fullname, email, phone } = req.body;
   const date = new Date();
@@ -56,5 +72,6 @@ module.exports = {
   getData,
   postData,
   putData,
-  delData
+  delData,
+  tester
 }

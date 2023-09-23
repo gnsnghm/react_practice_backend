@@ -21,7 +21,9 @@ var db = require('knex')({
 });
 
 // Middleware
-const whitelist = ['http://localhost:3001'];
+// const whitelist = ['http://localhost:3001'];
+// const whitelist = ['http://localhost:3000', 'http://localhost:3001'];
+const whitelist = process.env.WHITELIST_PORT.split(' ').map((_, i) => 'http://localhost:' + _);
 const corsOption = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
@@ -43,6 +45,9 @@ app.post('/crud', (req, res) => accountsControler.postData(req, res, db, 'accoun
 app.post('/regist', (req, res) => accountsControler.postData(req, res, db, 'users'));
 app.put('/crud', (req, res) => accountsControler.putData(req, res, db));
 app.delete('/delete', (req, res) => accountsControler.delData(req, res, db));
+
+// TEST
+app.get('/test', (req, res) => accountsControler.tester(req, res, db));
 
 // Connect
 app.listen(process.env.PORT || 3000, () => {
