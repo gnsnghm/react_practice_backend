@@ -14,10 +14,10 @@ const getData = (req, res, db) => {
     }));
 }
 
-const postData = (req, res, db) => {
+const postData = (req, res, db, tname) => {
   const { fullname, email, phone } = req.body;
   const date = new Date();
-  db('accounts').insert({ fullname, email, phone, date })
+  db(tname).insert({ fullname, email, phone, date })
     .returning('*')
     .then(item => {
       res.json(item);
