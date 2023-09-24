@@ -42,7 +42,7 @@ app.use(morgan('combined'));
 app.get('/', (req, res) => res.send('Server is running.'));
 app.get('/crud', (req, res) => accountsControler.getData(req, res, db));
 app.post('/crud', (req, res) => accountsControler.postData(req, res, db, 'accounts'));
-app.post('/regist', (req, res) => accountsControler.postData(req, res, db, 'users'));
+app.post('/regist', (req, res) => accountsControler.postUserData(req, res, db, 'users'));
 app.put('/crud', (req, res) => accountsControler.putData(req, res, db));
 app.delete('/delete', (req, res) => accountsControler.delData(req, res, db));
 
