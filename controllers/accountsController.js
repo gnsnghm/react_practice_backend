@@ -13,6 +13,25 @@ const getData = (req, res, db) => {
       dbError: 'error'
     }));
 }
+const searchData = (req, res, db) => {
+  const fullname = req.body.fullname + '%'
+  if (req.body.fullname !== '') {
+    db.select('*').from('accounts')
+      .whereLike('fullname', fullname)
+      .then(items => {
+        if (items.length) {
+          res.json(items);
+        } else {
+          res.json({
+            dataExists: 'false'
+          });
+        }
+      })
+      .catch(err => res.status(400).json({
+        dbError: 'error'
+      }));
+  }
+}
 
 const tester = (req, res, db) => {
   db.select('column_name')
@@ -96,6 +115,7 @@ const delData = (req, res, db) => {
 
 module.exports = {
   getData,
+  searchData,
   postUserData,
   postData,
   putData,
